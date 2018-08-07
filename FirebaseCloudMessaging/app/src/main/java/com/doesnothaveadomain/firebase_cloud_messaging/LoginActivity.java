@@ -13,8 +13,10 @@ import android.widget.Toast;
 import com.doesnothaveadomain.firebase_cloud_messaging.utilities.FirebaseUtil;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -44,8 +46,18 @@ public class LoginActivity extends AppCompatActivity
 		switch (item.getItemId())
 		{
 			case R.id.get_user_firebase_token:
-				String id = FirebaseInstanceId.getInstance().getId();
-				Log.d("toekn", id);
+				FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+						new OnSuccessListener<InstanceIdResult>()
+						{
+							@Override
+							public void onSuccess(InstanceIdResult instanceIdResult)
+							{
+								String deviceToken = instanceIdResult.getToken();
+								Log.d("toekn", deviceToken);
+								Toast.makeText(LoginActivity.this, "Token acquired.", Toast.LENGTH_LONG).show();
+							}
+						}
+				);
 				return true;
 			case R.id.signout_menu:
 				AuthUI.getInstance()
@@ -60,6 +72,7 @@ public class LoginActivity extends AppCompatActivity
 				FirebaseUtil.detachListner();
 				return true;
 		}
+	
 		
 		return super.onOptionsItemSelected(item);
 	}
