@@ -38,7 +38,7 @@ public class FirebaseUtil
 	
 	private FirebaseUtil() { }
 	
-	public static void openFirebaseReference(String dbPath, final Activity callerActivity)
+	public static void openFirebaseReference(final Activity callerActivity)
 	{
 		if(mFirebaseUtil == null)
 		{
@@ -67,8 +67,10 @@ public class FirebaseUtil
 			connectStorage();
 		}
 		mTravelDeals = new ArrayList<>();
-		mDbRef = mFirebaseDb.getReference().child(dbPath);
+		mDbRef = mFirebaseDb.getReference();
 	}
+	
+	
 	
 	private static void signin()
 	{
@@ -142,6 +144,6 @@ public class FirebaseUtil
 	public static void connectStorage()
 	{
 		mStorage = FirebaseStorage.getInstance();
-		mStorageRef = mStorage.getReference().child("deal-images");
+		mStorageRef = mStorage.getReference().child("???"); // todo
 	}
 }
