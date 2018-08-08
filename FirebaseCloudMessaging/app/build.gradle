@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     // firebase cloud messaging
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
-
+    // retrofit: http library
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

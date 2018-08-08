@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Firebase-Cloud-Messaging</string>
+    <string name="app_name">Firebase Cloud Messaging</string>
+    <string name="DBNODE_DeviceTokens">DeviceTokensssss</string>
 </resources>

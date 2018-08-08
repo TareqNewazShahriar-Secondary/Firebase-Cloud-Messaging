@@ -1,10 +1,13 @@
 package com.doesnothaveadomain.firebase_cloud_messaging.utilities;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.doesnothaveadomain.firebase_cloud_messaging.Models.KeyValuePair;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -21,7 +24,7 @@ import java.util.List;
 
 public class FirebaseUtil
 {
-	public static String TRAVELDEALS_PATH = "traveldeals";
+	public static String NODE_DEVICETOKENS = "DeviceTokens";
 	public static ArrayList<Object> mTravelDeals;
 	public static boolean isAdmin;
 	
@@ -145,5 +148,12 @@ public class FirebaseUtil
 	{
 		mStorage = FirebaseStorage.getInstance();
 		mStorageRef = mStorage.getReference().child("???"); // todo
+	}
+	
+	public static void InsertDeviceToken(String deviceToken)
+	{
+		FirebaseUtil.mDbRef.child(FirebaseUtil.NODE_DEVICETOKENS)
+				.push()
+				.setValue(new KeyValuePair(Build.DEVICE, deviceToken));
 	}
 }

@@ -19,13 +19,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 	{
 		String  nBody = "",
 				nTitle = "";
-		Map<String, String> nData;
+		Map<String, String> nData = null;
 		
 		try
 		{
-			nTitle = remoteMessage.getNotification().getTitle();
-			nBody = remoteMessage.getNotification().getBody();
-			nData = remoteMessage.getData();
+			if(remoteMessage.getNotification() != null)
+			{
+				nTitle = remoteMessage.getNotification().getTitle();
+				nBody = remoteMessage.getNotification().getBody();
+			}
+			if(remoteMessage.getData() != null)
+				nData = remoteMessage.getData();
 			
 			Log.d(TAG,  nTitle);
 			Log.d(TAG, nBody);
@@ -47,8 +51,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 	@Override
 	public void onNewToken(String s)
 	{
-		super.onNewToken(s);
-		Log.d("NEW_TOKEN", s);
-		Log.d("fire token", FirebaseInstanceId.getInstance().getToken());
+		Log.d(TAG, "New token acquired" + s);
+		//FirebaseUtil.InsertDeviceToken(s);
 	}
 }
