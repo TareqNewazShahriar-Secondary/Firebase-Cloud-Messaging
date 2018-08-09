@@ -34,6 +34,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 			Log.d(TAG,  nTitle);
 			Log.d(TAG, nBody);
 			Log.d(TAG, nData.toString());
+			new NotificationHelper(NotificationHelper.activityScope, nTitle,nBody + nData.toString()).Show();
 			///Toast.makeText(LoginActivity.this, "Got push notification: " + nBody, Toast.LENGTH_LONG).show();
 		}
 		catch(NullPointerException e)
@@ -46,12 +47,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 	public void onDeletedMessages()
 	{
 		super.onDeletedMessages();
+		new NotificationHelper(NotificationHelper.activityScope, "nTitle","on delete message").Show();
 	}
 	
 	@Override
 	public void onNewToken(String s)
 	{
 		Log.d(TAG, "New token acquired" + s);
+		new NotificationHelper(NotificationHelper.activityScope, "nTitle","on new token").Show();
 		//FirebaseUtil.InsertDeviceToken(s);
 	}
 }

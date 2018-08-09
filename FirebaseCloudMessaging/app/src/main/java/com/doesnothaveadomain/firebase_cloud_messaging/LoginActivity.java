@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.doesnothaveadomain.firebase_cloud_messaging.Models.KeyValuePair;
 import com.doesnothaveadomain.firebase_cloud_messaging.utilities.FirebaseUtil;
+import com.doesnothaveadomain.firebase_cloud_messaging.utilities.NotificationHelper;
+import com.doesnothaveadomain.firebase_cloud_messaging.utilities.StickySevice;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,11 +31,13 @@ public class LoginActivity extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		NotificationHelper.activityScope = this;
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
 		
 		FirebaseUtil.openFirebaseReference(this);
-		FirebaseUtil.attachListner();
+		
 	}
 	
 	@Override
