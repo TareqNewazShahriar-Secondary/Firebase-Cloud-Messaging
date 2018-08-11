@@ -31,13 +31,12 @@ public class LoginActivity extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		NotificationHelper.activityScope = this;
-		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
 		
-		FirebaseUtil.openFirebaseReference(this);
+		NotificationHelper.activityScope = this;
 		
+		FirebaseUtil.openFirebaseReference(this);
 	}
 	
 	@Override
@@ -47,6 +46,13 @@ public class LoginActivity extends AppCompatActivity
 		inflater.inflate(R.menu.main_activity_menu, menu);
 		
 		return true;
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		NotificationHelper.activityScope = null;
 	}
 	
 	@Override

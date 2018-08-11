@@ -4,36 +4,49 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+
+import com.doesnothaveadomain.firebase_cloud_messaging.FirebaseActivity;
 import com.doesnothaveadomain.firebase_cloud_messaging.R;
 
 public class NotificationHelper
 {
 	public static Activity activityScope = null;
+	Context appContext = null;
 	
+	String channelName = "";
+	String channelId = "";
 	String tittle = "";
 	String body = "";
-	Activity activity = null;
 	
-	public NotificationHelper(Activity activity, String title, String body)
+	public NotificationHelper(Context appContext, String title, String body)
 	{
+		this(appContext, title,  body, "Default");
+	}
+	
+	public NotificationHelper(Context appContext, String title, String body, String channelName)
+	{
+		this.channelName = channelName;
+		this.channelId = "__" + channelName + "__";
 		this.tittle = title;
 		this.body = body;
-		this.activity = activity;
+		this.appContext = appContext;
 	}
 	
 	public void Show()
 	{
 		NotificationManager notificationManager =
-				(NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-		
-		String channelId = "_default_id_";
-		CharSequence channelName = "Default";
+				(NotificationManager) appContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		
 		Notification.Builder notificationBuilderObj =
-				new Notification.Builder(activity.getApplicationContext(), channelId)
+				new Notification.Builder(appContext, channelId)
 					.setContentTitle(tittle)
 					.setContentText(body)
 					.setSmallIcon(R.drawable.fui_ic_twitter_bird_white_24dp)
@@ -41,13 +54,13 @@ public class NotificationHelper
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
 		{
-			NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-			notificationChannel.enableLights(true);
-			notificationChannel.setLightColor(Color.BLUE);
-			notificationChannel.enableVibration(true);
-			notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+			NotificationChannel channelObj = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+			channelObj.enableLights(true);
+			channelObj.setLightColor(Color.YELLOW);
+			channelObj.enableVibration(false);
+			//channelObj.setVibrationPattern(new long[]{ 100, 200, 300, 400, 500, 400, 300, 200, 400 });
 			
-			notificationManager.createNotificationChannel(notificationChannel);
+			notificationManager.createNotificationChannel(channelObj);
 			//notificationBuilderObj.setChannelId(channelId);
 		}
 		
