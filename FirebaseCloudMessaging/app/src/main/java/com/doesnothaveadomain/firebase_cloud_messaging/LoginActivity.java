@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.session.MediaSession;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.doesnothaveadomain.firebase_cloud_messaging.AppCore.AppData;
 import com.doesnothaveadomain.firebase_cloud_messaging.Models.KeyValuePair;
 import com.doesnothaveadomain.firebase_cloud_messaging.utilities.FirebaseUtil;
 import com.doesnothaveadomain.firebase_cloud_messaging.utilities.NotificationHelper;
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity
 		NotificationHelper.activityScope = this;
 		
 		FirebaseUtil.openFirebaseReference(this);
+		
 	}
 	
 	@Override
@@ -75,6 +78,10 @@ public class LoginActivity extends AppCompatActivity
 							}
 						}
 				);
+				return true;
+			case R.id.menu_stick_app:
+				AppData.isStickyService = !item.isChecked();
+				item.setChecked(AppData.isStickyService);
 				return true;
 			case R.id.signout_menu:
 				AuthUI.getInstance()
